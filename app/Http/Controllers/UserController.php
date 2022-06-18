@@ -8,6 +8,8 @@ use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Crypt;
 
 class UserController extends Controller
 {
@@ -28,6 +30,9 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        if (!Gate::allows('user-list')) {
+            abort(401);
+        }
         $data = User::orderBy('id','DESC')->paginate(5);
         return view('users.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
@@ -40,6 +45,9 @@ class UserController extends Controller
      */
     public function create()
     {
+        if (!Gate::allows('user-create')) {
+            abort(401);
+        }
         $roles = Role::pluck('name','id')->all();
         return view('users.create',compact('roles'));
     }
@@ -52,6 +60,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Gate::allows('user-create')) {
+            abort(401);
+        }
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
@@ -75,6 +86,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        if (!Gate::allows('user-list')) {
+            abort(401);
+        }
         $user = User::find($id);
         return view('users.show',compact('user'));
     }
@@ -87,6 +101,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        if (!Gate::allows('user-edit')) {
+            abort(401);
+        }
         $user = User::find($id);
         $roles = Role::pluck('name','id')->all();
         $userRole = $user->roles->pluck('name','id')->all();
@@ -102,6 +119,9 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!Gate::allows('user-edit')) {
+            abort(401);
+        }
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$id,
@@ -130,6 +150,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        if (!Gate::allows('user-delete')) {
+            abort(401);
+        }
         User::find($id)->delete();
         return redirect()->route('users.index')
             ->with('success','Utilizador eliminado com sucesso.');

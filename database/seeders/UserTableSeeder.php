@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 
@@ -16,21 +15,40 @@ class UserTableSeeder extends Seeder
     public function run()
     {
         User::create([
-            'name' => 'Super Admin',
-            'email' =>'superadmin@gmail.com',
+            'name' => 'Armando',
+            'email' =>'edson2017silva123@gmail.com',
             'email_verified_at' => now(),
-            'password' => bcrypt('12345678'),
+            'password' => bcrypt('123456789'),
             'password_changed_at' => now(),
             'remember_token' => Str::random(10),
         ]);
 
         User::create([
-            'name' => 'Gideão',
-            'email' =>'gd@gmail.com',
+            'name' => 'Helder',
+            'email' =>'helderlucheses@gmail.com',
             'email_verified_at' => now(),
-            'password' => bcrypt('12345678'),
+            'password' => bcrypt('123456789'),
             'password_changed_at' => now(),
             'remember_token' => Str::random(10),
         ]);
+
+        User::create([
+            'name' => 'Rodrigo',
+            'email' =>'rodrigogunza007@gmail.com',
+            'email_verified_at' => now(),
+            'password' => bcrypt('123456789'),
+            'password_changed_at' => now(),
+            'remember_token' => Str::random(10),
+        ]);
+
+        User::create([
+            'name' => 'DD',
+            'email' =>'uniilsiis@gmail.com',
+            'email_verified_at' => now(),
+            'password' => bcrypt('123456789'),
+            'password_changed_at' => now(),
+            'remember_token' => Str::random(10),
+        ]);
+
     }
 }
