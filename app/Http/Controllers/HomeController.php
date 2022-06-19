@@ -28,4 +28,9 @@ class HomeController extends Controller
         Log::info("[Página - Home] [".Auth::user()->email."]");
         return view('home');
     }
+
+    public function createAccout()
+    {
+        return view('register');
+    }
 }

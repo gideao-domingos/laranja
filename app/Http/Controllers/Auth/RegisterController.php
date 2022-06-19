@@ -8,9 +8,6 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Mail;
-use App\Mail\NotifyMail;
-use Illuminate\Support\Collection;
 
 class RegisterController extends Controller
 {
@@ -67,28 +64,10 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $users = User::create([
+        return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
-        $emailsend = $this->sendmail($data['email'], $data['name']);
-
-        return collect([$users, $emailsend]);
     }
-
-    public function sendmail($email, $custumer)
-    {
-      Mail::to($email)->send(new NotifyMail($custumer));
- 
-      if (Mail::failures()) {
-         return response()->json(array(
-            'message_mail' => 'Sorry! It was not possible to send the email'
-         ));
-      }else{
-         return response()->json(array(
-            'message_mail' => 'Great! Successfully send in your mail'
-         ));
-      }
-    } 
 }

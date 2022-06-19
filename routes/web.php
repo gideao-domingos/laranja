@@ -19,6 +19,8 @@ use App\Http\Controllers\Auth\ExpiredPasswordController;
 |
 */
 
+Route::get('createAccout', [HomeController::class, 'createAccout'])->name('createAccout');
+
 Route::get('/', function () {
     return view('welcome');
 });
